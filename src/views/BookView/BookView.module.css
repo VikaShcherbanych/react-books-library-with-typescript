@@ -1,0 +1,79 @@
+.imageWrap {
+    height: auto;
+    width: 300px;
+}
+
+img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+}
+
+.bookWrap {
+    padding-bottom: 20px;
+    border-bottom: 3px solid  #d26313;
+}
+
+@media screen and (min-width: 768px) {
+    .bookWrap {
+    display: flex;
+    }
+}
+
+.description {
+    margin-left: 10px;
+    max-width: 400px;
+    padding: 0;
+}
+
+.descriptionItem {
+    list-style: none;
+    font-family: 'Roboto', sans-serif;
+    text-align: justify;
+    text-indent: 20px;
+}
+
+.descriptionTitle {
+    margin: 0;
+    padding-bottom: 15px;
+}
+
+h2 {
+    color: #d26313;
+}
+
+.detailsWrap {
+   border-bottom: 3px solid rgb(250, 149, 17); 
+}
+
+.backBtnWrap {
+    padding-top: 20px;
+    text-align: left;
+}
+
+.backBtn {
+    padding: 8px 16px;
+    border-radius: 2px;
+    background-color: #fff;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: center;
+    display: inline-block;
+    color: rgb(175, 89, 8);
+    border: 0;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    font-style: normal;
+    font-weight: 500;
+    min-width: 180px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+        0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+
+.backBtn:hover,
+.backBtn:focus {
+    background-color: rgb(250, 149, 17);
+    color: #fff;
+}

@@ -1,0 +1,12 @@
+.errorWrap {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.errorMessage {
+   padding-top: 20px;
+   font-size: 20px;
+   color: rgb(156, 39, 19); 
+}

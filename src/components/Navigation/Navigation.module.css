@@ -1,0 +1,19 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 12px;
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 24px;
+}
+
+.activeLink {
+    composes: link;
+    color: rgb(74, 43, 3);;
+}
