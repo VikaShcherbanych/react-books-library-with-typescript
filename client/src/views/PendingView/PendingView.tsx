@@ -1,7 +1,7 @@
-import { FaSpinner } from 'react-icons/fa';
-import s from './PendingView.module.css';
+import { FaSpinner } from "react-icons/fa";
+import s from "./PendingView.module.css";
 
-const PendingView:React.FC = () => {
+const PendingView: React.FC = () => {
   return (
     <div role="alert">
       <div className={s.spinner}>
@@ -10,6 +10,6 @@ const PendingView:React.FC = () => {
       </div>
     </div>
   );
-}
+};
 
 export default PendingView;

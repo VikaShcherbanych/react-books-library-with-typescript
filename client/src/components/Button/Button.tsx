@@ -1,15 +1,16 @@
-import s from './Button.module.css'
+import s from "./Button.module.css";
 
 interface IButtonProps {
-    onClick: ()=>void;
+  onClick: () => void;
+  text: string;
 }
 
-const Button: React.FC<IButtonProps>= ({ onClick}) => {
-    return (
-        <button onClick={onClick} className={s.button} type="button">
-        Load more
-      </button>
-    );
-  }
+const Button: React.FC<IButtonProps> = ({ onClick, text }) => {
+  return (
+    <button onClick={onClick} className={s.button} type="button">
+      {text}
+    </button>
+  );
+};
 
 export default Button;
