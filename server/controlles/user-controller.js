@@ -62,14 +62,6 @@ class UserController {
         }
     }
 
-    async getBooks (req, res, next) {
-        try {
-            
-        } catch (e) {
-            next(e)
-        }
-    }
-
 }
 
 
