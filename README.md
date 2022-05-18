@@ -17,7 +17,7 @@ to install the project - npm install
 
 to start the project - npm run start
 
-2. BackEnd part (to run the client folder):
+2. BackEnd part (to run the server folder):
 
 to install the project - npm install
 
