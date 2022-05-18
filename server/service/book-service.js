@@ -2,36 +2,29 @@ const BookModel = require("../models/book-model");
 const ApiError = require("../exceptions/api-error");
 
 class BookService {
-  async addBook(book, userId) {
-    const { id } = book;
+  async addBook(userBook, userId) {
+    const { id } = userBook;
     const copyOfBook = await BookModel.findOne({ id });
     if (copyOfBook) {
-      throw ApiError.BadRequest(`The book ${book.title} already exists`);
+      throw ApiError.BadRequest(`The book ${userBook.title} already exists`);
     }
-    const userBook = await BookModel.create({
-      title: book.title,
-      authors: book.authors,
-      categories: book.categories,
-      imageLink: book.imageLink,
-      previewLink: book.previewLink,
-      user: userId,
-      id,
-    });
-
+    const newBook = { ...userBook, owner: userId };
+    const book = await BookModel.create(newBook);
     return {
-      userBook,
+      book,
     };
   }
 
   async deleteBook(id) {
-    const result = await BookModel.findByIdAndRemove(id);
+    console.log(id);
+    const result = await BookModel.findOneAndDelete({ id });
     if (!result) {
       throw new NotFound(`Book with id = ${id} not found`);
     }
   }
 
-  async getBooks(id) {
-    const books = await BookModel.find({ user: id });
+  async getBooks(user) {
+    const books = await BookModel.find(user);
     return books;
   }
 }

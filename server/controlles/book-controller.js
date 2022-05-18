@@ -3,13 +3,13 @@ const bookService = require("../service/book-service");
 class BookController {
   async addBook(req, res, next) {
     try {
-      const newBook = { ...req.body };
-      const book = await bookService.addBook(newBook, req.user._id);
+      const newBook = req.body.book;
+      const book = await bookService.addBook(newBook, req.user.id);
       res.json({
         status: "success",
         code: 201,
         data: {
-          book,
+          ...book,
         },
       });
     } catch (e) {
@@ -33,14 +33,8 @@ class BookController {
 
   async getBooks(req, res, next) {
     try {
-      const books = await bookService.getBooks(req.user._id);
-      res.json({
-        status: "success",
-        code: 200,
-        data: {
-          books,
-        },
-      });
+      const books = await bookService.getBooks({ owner: req.user.id });
+      res.json(books);
     } catch (e) {
       next(e);
     }
