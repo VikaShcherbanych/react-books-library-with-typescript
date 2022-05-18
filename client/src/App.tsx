@@ -30,6 +30,13 @@ const BookView = lazy(
     )
 );
 
+const LibraryView = lazy(
+  () =>
+    import(
+      "./views/LibraryView/LibraryView" /* webpackChunkName: "library-page" */
+    )
+);
+
 const App: React.FC = () => {
   const { store } = useContext(Context);
 
@@ -60,6 +67,7 @@ const App: React.FC = () => {
                 <Route path="/" element={<BestSellersPageView />} />
                 <Route path="/books" element={<SearchBooksView />} />
                 <Route path="/books/:bookId" element={<BookView />} />
+                <Route path="/library" element={<LibraryView />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             )}

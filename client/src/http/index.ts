@@ -7,7 +7,7 @@ const $api = axios.create({
   withCredentials: true,
   baseURL: API_URL,
 });
-
+// interceptor for requestto server(add authorization headers)
 $api.interceptors.request.use((config) => {
   if (config.headers) {
     config.headers.Authorization = `Bearer ${localStorage.getItem("token")}`;
@@ -15,6 +15,7 @@ $api.interceptors.request.use((config) => {
   return config;
 });
 
+// interceptor for response from sertver(refresh token)
 $api.interceptors.response.use(
   (config) => {
     return config;

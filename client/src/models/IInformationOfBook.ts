@@ -10,5 +10,7 @@ export interface IInformationOfBook {
     imageLinks: {
       thumbnail: string;
     };
+    previewLink: string;
+    categories: Array<string>;
   };
 }

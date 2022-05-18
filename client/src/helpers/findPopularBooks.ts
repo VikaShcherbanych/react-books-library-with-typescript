@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-import getBooksAPI from "../services/getBooks-api";
+import getBooksAPI from "../services/booksFromOpenAPI/getBooks-api";
 
 export const findPopularBooks = () => {
   return getBooksAPI

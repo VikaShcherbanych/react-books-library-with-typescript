@@ -2,17 +2,22 @@ import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { toast } from "react-toastify";
 
 import Button from "../../components/Button/Button";
-import getBookAPI from "../../services/getBooks-api";
+import getBookAPI from "../../services/booksFromOpenAPI/getBooks-api";
 import { Context } from "../../index";
 import notImage from "../../images/not-found-img.jpeg";
 import { IInformationOfBook } from "../../models/IInformationOfBook";
+import { updateBookBeforeSave } from "../../helpers/updateBookBeforeSave";
+import booksService from "../../services/booksFromBD/BooksService";
 import s from "./BookView.module.css";
+import { IBookFromLibrary } from "../../models/IBookFromLibrary";
 
 const BookView: React.FC = () => {
   const { bookId } = useParams<string>();
   const [book, setBook] = useState<IInformationOfBook | null>(null);
+  const [library, setLibrary] = useState<IBookFromLibrary[]>([]);
   let navigate = useNavigate();
   const { store } = useContext(Context);
 
@@ -22,12 +27,31 @@ const BookView: React.FC = () => {
     }
   }, [bookId]);
 
+  useEffect(() => {
+    booksService.fetchBooks().then((res) => setLibrary(res.data));
+  }, []);
+
   const onGoBack = () => {
     navigate(-1);
   };
 
-  const onAddBookToLibrary = () => {
-    console.log("Added to library");
+  const handleAddBookToLibrary = (addedBook: IInformationOfBook) => {
+    const newBook = updateBookBeforeSave(addedBook);
+    booksService.addBook(newBook, store.user.id).then((res) => {
+      if (res.status === 200) {
+        toast.success("Success! Book added.");
+        booksService.fetchBooks().then((res) => setLibrary(res.data));
+      }
+    });
+  };
+
+  const handleDeleteBookFromLibrary = (id: string) => {
+    booksService.deleteBook(id).then((res) => {
+      if (res.status === 200) {
+        toast.success("Book deleted!");
+        booksService.fetchBooks().then((res) => setLibrary(res.data));
+      }
+    });
   };
 
   return (
@@ -36,8 +60,17 @@ const BookView: React.FC = () => {
         <>
           <div className={s.backBtnWrap}>
             <Button onClick={onGoBack} text="Go back" />
-            {store.isAuth && (
-              <Button onClick={onAddBookToLibrary} text="Add to my library" />
+            {store.isAuth && !library.find((el) => el.id === bookId) && (
+              <Button
+                onClick={() => handleAddBookToLibrary(book)}
+                text="Add to library"
+              />
+            )}
+            {store.isAuth && library.find((el) => el.id === bookId) && (
+              <Button
+                onClick={() => handleDeleteBookFromLibrary(book.id)}
+                text="Delete from library"
+              />
             )}
           </div>
           <h2>

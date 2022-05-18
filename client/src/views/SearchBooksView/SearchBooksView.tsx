@@ -21,9 +21,10 @@ interface IError {
 }
 
 const SearchBooksView: any = () => {
+  const FIRST_PAGE_IN_PAGINATION = 1;
   const [books, setBooks] = useState<IBook[]>([]);
   const [request, setRequest] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(FIRST_PAGE_IN_PAGINATION);
   const [error, setError] = useState<IError | null>(null);
   const [status, setStatus] = useState(Status.IDLE);
   const [searchParams, setSearchParams] = useSearchParams();

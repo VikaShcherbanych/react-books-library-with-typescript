@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import getBookAPI from "../services/getBooks-api";
+import getBookAPI from "../services/booksFromOpenAPI/getBooks-api";
 import { IBook } from "../models/IBook";
 
 export const findBooks = (request: string, page: number, books: IBook[]) => {

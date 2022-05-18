@@ -59,6 +59,12 @@ const Navigation: React.FC = () => {
           >
             SearchBooks
           </NavLink>
+          <NavLink
+            to="/library"
+            className={(navData) => (navData.isActive ? s.activeLink : s.link)}
+          >
+            Library
+          </NavLink>
           <div>
             <button onClick={() => store.logout()} className={s.navButton}>
               LogOut
