@@ -34,18 +34,18 @@ Project is created with:
 
 * FrontEnd part (to run the client folder):
 
-```
-to install the project - ***npm install***
+``` javascript
+to install the project - npm install
 
-to start the project - ***npm run start***
+to start the project - npm run start
 ```
 
 * BackEnd part (to run the server folder):
 
-```
-to install the project - ***npm install***
+```javascript
+to install the project - npm install
 
-to start the project - ***npm run dev***
+to start the project - npm run dev
 ```
 
 * Enjoy 💙💛 
