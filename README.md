@@ -5,7 +5,6 @@
 
 ## Table of Conntents
 
-  - [Table of Conntents](#table-of-conntents)
   - [General info](#general-info)
   - [Technologies](#technologies)
   - [Setup](#setup)
