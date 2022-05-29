@@ -5,7 +5,8 @@ const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
-const router = require("./router/index");
+const userRouter = require("./router/users");
+const bookRouter = require("./router/books");
 const errorMiddleware = require("./middlewares/error-middleware");
 
 const PORT = process.env.PORT || 8000;
@@ -20,7 +21,8 @@ app.use(
     origin: process.env.CLIENT_URL,
   })
 );
-app.use("/api", router);
+app.use("/api/users", userRouter);
+app.use("/api/books", bookRouter);
 app.use(errorMiddleware);
 
 const start = async () => {

@@ -18,10 +18,10 @@ class UserService {
         const mail = {
             to: email,
             subject: 'Confirm registration',
-            html: `<a href="${process.env.API_URL}/api/activate/${activationLink}">Click to confirm your email</a>`
-          }
+            html: `<a href="${process.env.API_URL}/api/users/activate/${activationLink}">Click to confirm your email</a>`
+        };
         
-        await sendMail(mail)
+        await sendMail(mail);
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
@@ -42,9 +42,9 @@ class UserService {
     }
 
     async login(email, password) {
-        const user = await UserModel.findOne({email})
+        const user = await UserModel.findOne({email});
         if (!user) {
-            throw ApiError.BadRequest('User was not found with this email')
+            throw ApiError.BadRequest('User was not found with this email');
         }
         const isPassEquals = await bcrypt.compare(password, user.password);
         if (!isPassEquals) {
@@ -54,7 +54,7 @@ class UserService {
         const tokens = tokenService.generateTokens({...userDto});
 
         await tokenService.saveToken(userDto.id, tokens.refreshToken);
-        return {...tokens, user: userDto}
+        return {...tokens, user: userDto};
     }
 
     async logout(refreshToken) {

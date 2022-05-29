@@ -20,11 +20,12 @@ class BookController {
   async deleteBook(req, res, next) {
     try {
       const { bookId } = req.params;
-      await bookService.deleteBook(bookId);
+      const book = await bookService.deleteBook(bookId);
       res.json({
         status: "success",
         code: 200,
         message: "Book deleted",
+        id: book.id,
       });
     } catch (e) {
       next(e);

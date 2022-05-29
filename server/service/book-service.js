@@ -16,11 +16,11 @@ class BookService {
   }
 
   async deleteBook(id) {
-    console.log(id);
     const result = await BookModel.findOneAndDelete({ id });
     if (!result) {
       throw new NotFound(`Book with id = ${id} not found`);
     }
+    return result;
   }
 
   async getBooks(user) {
