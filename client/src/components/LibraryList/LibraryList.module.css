@@ -1,0 +1,18 @@
+.bookCardsList {
+    padding: 30px 0;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .bookCardsList {
+      display: grid;
+      grid-template-columns: repeat(2, 300px);
+      grid-auto-rows: 490px;
+      grid-gap: 30px;
+    }
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .bookCardsList {
+      grid-template-columns: repeat(3, 275px);
+    }
+  }

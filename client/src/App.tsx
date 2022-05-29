@@ -1,50 +1,45 @@
-import { lazy, Suspense, useContext, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { observer } from "mobx-react-lite";
-import { Context } from "./index";
+import { lazy, Suspense } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import Container from "./components/Container/Container";
-import NavBar from "./components/NavBar/NavBar";
-import LoginView from "./views/LoginView/LoginView";
-import PendingView from "./views/PendingView/PendingView";
-import SignUpView from "./views/SignUpView/SignUpView";
+import { useAppSelector } from './hooks/redux';
+
+import Container from './components/Container/Container';
+import NavBar from './components/NavBar/NavBar';
+import LoginView from './views/LoginView/LoginView';
+import PendingView from './views/PendingView/PendingView';
+import SignUpView from './views/SignUpView/SignUpView';
 
 const BestSellersPageView = lazy(
   () =>
     import(
-      "./views/BestSellersPageView/BestSellersPageView" /* webpackChunkName: "home-page" */
-    )
+      './views/BestSellersPageView/BestSellersPageView' /* webpackChunkName: "home-page" */
+    ),
 );
 const SearchBooksView = lazy(
   () =>
     import(
-      "./views/SearchBooksView/SearchBooksView" /* webpackChunkName: "books-page" */
-    )
+      './views/SearchBooksView/SearchBooksView' /* webpackChunkName: "books-page" */
+    ),
 );
 const BookView = lazy(
   () =>
     import(
-      "./views/BookView/BookView" /* webpackChunkName: "books-details-page" */
-    )
+      './views/BookView/BookView' /* webpackChunkName: "books-details-page" */
+    ),
 );
 
 const LibraryView = lazy(
   () =>
     import(
-      "./views/LibraryView/LibraryView" /* webpackChunkName: "library-page" */
-    )
+      './views/LibraryView/LibraryView' /* webpackChunkName: "library-page" */
+    ),
 );
 
 const App: React.FC = () => {
-  const { store } = useContext(Context);
+  const store = useAppSelector(state => state.auth);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      store.checkAuth();
-    }
-  }, []);
   return (
     <>
       <NavBar />
@@ -89,4 +84,4 @@ const App: React.FC = () => {
   );
 };
 
-export default observer(App);
+export default App;

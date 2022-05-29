@@ -34,7 +34,7 @@ const HomePageView: React.FC = () => {
                 <h2 className={s.bookCardTitle}>
                   {title.length > 27 ? `${title.slice(0, 25)}...` : title}
                 </h2>
-                <p className={s.bookCardAuthor}>{author}</p>
+                <p className={s.bookCardAuthor}>{author.length > 27 ? `${author.slice(0, 25)}...` : author}</p>
               </a>
             </li>
           )

@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { observer } from "mobx-react-lite";
-import { Context } from "../../index";
+import { useState } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { userRegistration } from "../../redux/reducers/user/ActionCreators";
 import s from "./SignUpView.module.css";
 
 const SignUpView: React.FC = () => {
-  const { store } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useAppDispatch();
 
   const handleChange = ({ target: { name = "", value = "" } }) => {
     switch (name) {
@@ -21,7 +21,7 @@ const SignUpView: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    store.registration(email, password);
+    dispatch(userRegistration({email, password}));
     setEmail("");
     setPassword("");
   };
@@ -61,4 +61,4 @@ const SignUpView: React.FC = () => {
   );
 };
 
-export default observer(SignUpView);
+export default SignUpView;

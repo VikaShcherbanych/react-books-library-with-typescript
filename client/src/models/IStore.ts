@@ -1,5 +1,8 @@
-import Store from "../store/store";
+import { IUser } from "./IUser";
 
 export interface IStore {
-  store: Store;
+  user: IUser;
+  isAuth: boolean;
+  isLoading: boolean;
+  error: string;
 }

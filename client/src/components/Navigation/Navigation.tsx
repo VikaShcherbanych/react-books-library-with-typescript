@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
-import { observer } from "mobx-react-lite";
 import s from "./Navigation.module.css";
-
-import { Context } from "../../index";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { userLogout } from "../../redux/reducers/user/ActionCreators";
 
 const Navigation: React.FC = () => {
-  const { store } = useContext(Context);
+  const dispatch = useAppDispatch();
+  const store = useAppSelector(state => state.auth);
+
   return (
     <>
       {!store.isAuth ? (
@@ -66,7 +67,7 @@ const Navigation: React.FC = () => {
             Library
           </NavLink>
           <div>
-            <button onClick={() => store.logout()} className={s.navButton}>
+            <button onClick={() => dispatch(userLogout())} className={s.navButton}>
               LogOut
             </button>
           </div>
@@ -76,4 +77,4 @@ const Navigation: React.FC = () => {
   );
 };
 
-export default observer(Navigation);
+export default Navigation;

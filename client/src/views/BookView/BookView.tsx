@@ -1,25 +1,27 @@
 import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { observer } from "mobx-react-lite";
+//import { observer } from "mobx-react-lite";
 import { toast } from "react-toastify";
 
 import Button from "../../components/Button/Button";
 import getBookAPI from "../../services/booksFromOpenAPI/getBooks-api";
-import { Context } from "../../index";
+//import { Context } from "../../index";
 import notImage from "../../images/not-found-img.jpeg";
 import { IInformationOfBook } from "../../models/IInformationOfBook";
 import { updateBookBeforeSave } from "../../helpers/updateBookBeforeSave";
 import booksService from "../../services/booksFromBD/BooksService";
 import s from "./BookView.module.css";
 import { IBookFromLibrary } from "../../models/IBookFromLibrary";
+import { useAppSelector } from "../../hooks/redux";
 
 const BookView: React.FC = () => {
   const { bookId } = useParams<string>();
   const [book, setBook] = useState<IInformationOfBook | null>(null);
   const [library, setLibrary] = useState<IBookFromLibrary[]>([]);
   let navigate = useNavigate();
-  const { store } = useContext(Context);
+  //const { store } = useContext(Context);
+  const store = useAppSelector(state => state.auth);
 
   useEffect(() => {
     if (bookId) {
@@ -74,8 +76,7 @@ const BookView: React.FC = () => {
             )}
           </div>
           <h2>
-            {book.volumeInfo.title} ({book.volumeInfo.publishedDate.slice(0, 4)}
-            )
+            {book.volumeInfo.title} ({book.volumeInfo?.publishedDate ? book.volumeInfo?.publishedDate.slice(0, 4) : ''})
           </h2>
           <div className={s.bookWrap}>
             <div className={s.imageWrap}>
@@ -97,7 +98,7 @@ const BookView: React.FC = () => {
                 <h3 className={s.descriptionTitle}>Description :</h3>
                 <p className={s.overview}>
                   {book.volumeInfo.description
-                    ? book.volumeInfo.description
+                    ? book.volumeInfo.description.replace(/<\/?[^>]+>/g, '')
                     : "No description for this book"}
                 </p>
               </li>
@@ -113,4 +114,4 @@ const BookView: React.FC = () => {
   );
 };
 
-export default observer(BookView);
+export default BookView;

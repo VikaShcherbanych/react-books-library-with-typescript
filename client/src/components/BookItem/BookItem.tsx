@@ -25,7 +25,7 @@ const BookItem: React.FC<IPropBook> = ({ book }: IPropBook) => {
           height="390"
         />
         <h2 className={s.bookCardTitle}>
-          {book.volumeInfo?.title.length > 27
+          {book.volumeInfo.title && book.volumeInfo.title.length > 27
             ? `${book.volumeInfo.title.slice(0, 25)}...`
             : book.volumeInfo.title}
         </h2>

@@ -101,7 +101,7 @@ const SearchBooksView: any = () => {
     return (
       <>
         <FormRorSearchBooks onSubmit={handleFormSubmit} />
-        {books && (
+        {new Set(books) && (
           <div className={s.bookCards}>
             <BookList books={books} />
             {books.length >= 10 && (

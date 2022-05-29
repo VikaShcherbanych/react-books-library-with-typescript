@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
-import { observer } from "mobx-react-lite";
+import { useState } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { userLogin } from "../../redux/reducers/user/ActionCreators";
 
-import { Context } from "../../index";
 import s from "./LoginView.module.css";
 
 const LoginView: React.FC = () => {
-  const { store } = useContext(Context);
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,7 +22,7 @@ const LoginView: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    store.login(email, password);
+    dispatch(userLogin({email, password}));
     setEmail("");
     setPassword("");
   };
@@ -62,4 +62,4 @@ const LoginView: React.FC = () => {
   );
 };
 
-export default observer(LoginView);
+export default LoginView;
