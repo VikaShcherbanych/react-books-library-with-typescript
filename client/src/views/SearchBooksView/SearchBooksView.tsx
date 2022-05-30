@@ -5,22 +5,14 @@ import PendingView from "../PendingView/PendingView";
 import ErrorView from "../ErrorView/ErrorView";
 import Button from "../../components/Button/Button";
 import { IBook } from "../../models/IBook";
+import { IError } from "../../models/IError";
 import { findBooks } from "../../helpers/findBooks";
+import { Status } from "../../common/status";
 import s from "./SearchBooksView.module.css";
 import FormRorSearchBooks from "../../components/FormForSearchBooks/FormRorSearchBooks";
 import BookList from "../../components/BookList/BookList";
 
-const Status = {
-  IDLE: "idle",
-  PENDING: "pending",
-  RESOLVED: "resolved",
-  REJECTED: "rejected",
-};
-interface IError {
-  message: string;
-}
-
-const SearchBooksView: any = () => {
+const SearchBooksView: React.FC = () => {
   const FIRST_PAGE_IN_PAGINATION = 1;
   const [books, setBooks] = useState<IBook[]>([]);
   const [request, setRequest] = useState<string>("");
@@ -85,33 +77,26 @@ const SearchBooksView: any = () => {
     setPage((p) => p + 1);
   };
 
-  if (status === "idle") {
-    return <FormRorSearchBooks onSubmit={handleFormSubmit} />;
-  }
-
-  if (status === "pending") {
-    return <PendingView />;
-  }
-
-  if (status === "rejected") {
-    return <ErrorView message={error?.message} />;
-  }
-
-  if (status === "resolved") {
-    return (
-      <>
-        <FormRorSearchBooks onSubmit={handleFormSubmit} />
-        {new Set(books) && (
-          <div className={s.bookCards}>
-            <BookList books={books} />
-            {books.length >= 10 && (
-              <Button onClick={changePage} text="Load more" />
-            )}
-          </div>
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+    {status === "idle" && <FormRorSearchBooks onSubmit={handleFormSubmit} />}
+    {status === "pending" && <PendingView />}
+    {status === "rejected" && <ErrorView message={error?.message} />}
+    {status === "resolved" && 
+     <>
+     <FormRorSearchBooks onSubmit={handleFormSubmit} />
+     {new Set(books) && (
+       <div className={s.bookCards}>
+         <BookList books={books} />
+         {books.length >= 10 && (
+           <Button onClick={changePage} text="Load more" />
+         )}
+       </div>
+     )}
+   </>
+    }
+    </>
+  )
 };
 
 export default SearchBooksView;

@@ -14,7 +14,7 @@ const HomePageView: React.FC = () => {
 
   return (
     <div className={s.bookCards}>
-      <h1>The New York Times Best Sellers lists</h1>
+      <h1>The New York Times Best Sellers list</h1>
       <ul className={s.bookCardsList}>
         {popularBooks.map(
           ({
