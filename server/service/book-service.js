@@ -4,8 +4,8 @@ const ApiError = require("../exceptions/api-error");
 class BookService {
   async addBook(userBook, userId) {
     const { id } = userBook;
-    const copyOfBook = await BookModel.findOne({ id });
-    if (copyOfBook) {
+    const copyOfBooks = await BookModel.find({ owner: userId });
+    if (copyOfBooks.some(book => book.id === id)) {
       throw ApiError.BadRequest(`The book ${userBook.title} already exists`);
     }
     const newBook = { ...userBook, owner: userId };
