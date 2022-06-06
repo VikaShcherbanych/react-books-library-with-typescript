@@ -1,20 +1,6 @@
-const user = require("../../controlles/user-controller");
+const user = require("../../controlles/user-controller").login;
 const userService = require("../../service/user-service");
 const ApiError = require("../../exceptions/api-error");
-
-// async login(req, res, next) {
-//   try {
-//       if (!req.body.email || !req.body.password) {
-//           throw ApiError.BadRequest('User was not found with this email');
-//       }
-//       const {email, password} = req.body;
-//       const userData = await userService.login(email, password);
-//       res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
-//       return res.json(userData);
-//   } catch (e) {
-//       next(e)
-//   }
-// }
 
 const res = {
   accessToken:
@@ -31,17 +17,19 @@ const res = {
 const req = {
   body: {
     email: "dyaral696@gmail.com",
+    password: "123456",
     id: "62838f84e4e2fac20845a5a7",
   },
 };
 
 const next = jest.fn();
-jest.mock('../../service/user-service');
-//jest.spyOn(userService, "login").mockImplementation(() => res);
+jest.spyOn(userService, "login").mockImplementation(() => res);
 
 describe("Login controller", () => {
-  test("should not get arguments req", async () => {
-    await user.login({}, res, next);
+
+  afterEach(() => {jest.clearAllMocks()});
+  test("should not get arguments req and called next as a result", async () => {
+    await user({}, res, next);
     expect(next).toBeCalled();
   });
   test("should get arguments mockReq without password property and return error", async () => {
@@ -51,14 +39,24 @@ describe("Login controller", () => {
         isActivated: true,
       },
     };
-    await user.login(mockReq, res, next);
+    await user(mockReq, res, next);
     expect(next).toHaveBeenCalledWith(
       ApiError.BadRequest("User was not found with this email")
     );
   });
-  test("should", async () => {
-    userService.login = jest.fn(() => res);
-    const result = await user.login(req, res, next);
-    expect(userService.login).toBeCalled();
+  test("should get argument req with email and password", async () => {
+    await user(req, res, next);
+    expect(req.body).toHaveProperty("email");
+    expect(req.body).toHaveProperty("password");
+  });
+  test("should get argument req and return res", async () => {
+    let result;
+    userService.login.mockReturnValue(res);
+    await user(req, res, next).then(() => {
+      result = res;
+    });
+    expect(userService.login).toBeCalledTimes(1);
+    expect(result).toBeDefined();
+    expect(result).toEqual(res);
   });
 });
