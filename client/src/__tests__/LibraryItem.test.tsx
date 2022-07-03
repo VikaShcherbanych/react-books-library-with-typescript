@@ -3,7 +3,6 @@ import Adapter from 'enzyme-adapter-react-16';
 import { shallow, configure } from 'enzyme';
 import { toast } from "react-toastify";
 import  LibraryItem  from "../components/LibraryItem/LibraryItem";
-import { useAppSelector, useAppDispatch } from '../hooks/redux';
 
 configure({adapter: new Adapter()});
 
@@ -11,7 +10,7 @@ jest.mock("../images/not-found-img.jpeg", () => ({}));
 jest.mock("../components/LibraryItem/LibraryItem.module.css", () => ({}));
 jest.mock('../components/Button/Button.tsx', () => ({}));
 toast.success = jest.fn();
-//let dispatch = jest.fn();
+
 jest.mock('../hooks/redux', () => ({
   useAppDispatch: () => {},
   useAppSelector: () => ({
